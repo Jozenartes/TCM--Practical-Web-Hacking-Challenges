@@ -13,7 +13,11 @@ def main():
     if len(sys.argv) != 2:
         print("[+] Usage %s <url>" % sys.argv[0])
         print("[+] Example: %s www.example.com" % sys.argv[0])
+        sys.exit(-1)
 
+        url = sys.argv[1]
+        print("[+] Checking for Adminstrator User and Password")
+        nosql_check(url)
 
 
 if __name__ == "__main__":
