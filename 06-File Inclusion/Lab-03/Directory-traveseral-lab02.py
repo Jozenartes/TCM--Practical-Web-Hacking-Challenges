@@ -11,7 +11,7 @@ def path_traversal_exploit(url):
 #Confirm success of exploit
     if 'daemon:' in r.text:
         print('[+] Exploit Successful')
-        print('Here\s the content of the etc/passwd:\n')
+        print('Here\'s the content of the etc/passwd:\n')
         print(r.text)
     else:
         print('[-] Exploit Unsuccesful')
