@@ -12,6 +12,7 @@ def path_traversal_exploit(url):
         print('[+] Exploit Successful!')
     else:
         print('[-] Exploit Unsuccessful!')
+        sys.exit(-1)
 
 def main():
     if len(sys.argv) != 2:
